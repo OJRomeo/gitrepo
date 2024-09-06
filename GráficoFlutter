@@ -1,0 +1,69 @@
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+class Chart extends StatelessWidget {
+  const Chart({
+    Key? key,
+    this.width,
+    this.height,
+    required this.xValues,
+    required this.yValues,
+  }) : super(key: key);
+
+  final double? width;
+  final double? height;
+  final List<String> xValues;
+  final List<double> yValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return SfCartesianChart(
+        primaryXAxis: CategoryAxis(majorGridLines: MajorGridLines(width: 0.5)),
+        primaryYAxis: NumericAxis(
+          majorGridLines: MajorGridLines(width: 0.5),
+        ),
+        title: ChartTitle(text: 'Gráfico de Linha'),
+        tooltipBehavior: TooltipBehavior(enable: true),
+        series: <CartesianSeries<String, double>>[
+          LineSeries<String, double>(
+            xValueMapper: (String datum, int index) {},
+            yValueMapper: (String datum, int index) {},
+          ),
+        ]);
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        // Inicialize o widget de gráfico de linha
+        child: SfCartesianChart(
+          primaryXAxis: CategoryAxis(),
+          primaryYAxis: NumericAxis(),
+          series: <CartesianSeries>[
+            LineSeries<_ChartData, String>(
+              // Seus dados de entrada aqui
+              dataSource: _getChartData(),
+              xValueMapper: (data, _) => data.x,
+              yValueMapper: (data, _) => data.y,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<_ChartData> _getChartData() {
+    List<_ChartData> chartData = [];
+    for (int i = 0; i < xValues.length; i++) {
+      chartData.add(_ChartData(xValues[i], yValues[i]));
+    }
+    return chartData;
+  }
+}
+
+class _ChartData {
+  _ChartData(this.x, this.y);
+
+  final String x;
+  final double y;
+}
+
+// Inacabado e não funcional por enquanto
