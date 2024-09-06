@@ -1,0 +1,10 @@
+int countTotalItems(List<ProductTypeStruct> appState) {
+
+  int total = 0;
+
+  for (int index = 0; index < appState.length; index++) {
+    total += appState[index].prodQtty;
+  }
+  return total;
+
+}
