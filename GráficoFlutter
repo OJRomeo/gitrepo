@@ -33,13 +33,11 @@ class Chart extends StatelessWidget {
     Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        // Inicialize o widget de gráfico de linha
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(),
           primaryYAxis: NumericAxis(),
           series: <CartesianSeries>[
             LineSeries<_ChartData, String>(
-              // Seus dados de entrada aqui
               dataSource: _getChartData(),
               xValueMapper: (data, _) => data.x,
               yValueMapper: (data, _) => data.y,
