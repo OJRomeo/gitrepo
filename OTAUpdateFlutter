@@ -1,0 +1,45 @@
+import 'index.dart'; // Imports other custom actions
+
+import 'package:ota_update/ota_update.dart';
+
+Future otaUpdate(String linkdownload) async {
+  const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
+  if (kIsWeb == false) {
+    String url = "https://s3.grupolaredo.online/imagens/app-release.apk";
+
+    OtaUpdate ota = OtaUpdate();
+
+    ota.execute(linkdownload).listen(
+      (OtaEvent event) {
+        switch (event.status) {
+          case OtaStatus.DOWNLOADING:
+            FFAppState().update(() {
+              FFAppState().otaStatus = "Baixando atualização...";
+            });
+            break;
+          case OtaStatus.INSTALLING:
+            FFAppState().update(() {
+              FFAppState().otaStatus = "Instalando atualização...";
+            });
+            break;
+          case OtaStatus.DOWNLOAD_ERROR:
+            FFAppState().update(() {
+              FFAppState().otaStatus = "Erro no download!";
+            });
+            break;
+          case OtaStatus.INTERNAL_ERROR:
+            FFAppState().update(() {
+              FFAppState().otaStatus = "Erro não especificado.";
+            });
+            break;
+          case OtaStatus.ALREADY_RUNNING_ERROR:
+            \\N terminei ainda
+          case OtaStatus.PERMISSION_NOT_GRANTED_ERROR:
+            \\N terminei ainda
+          case OtaStatus.CHECKSUM_ERROR:
+            \\N terminei ainda
+        }
+      },
+    );
+  }
+}
