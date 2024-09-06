@@ -1,0 +1,15 @@
+DateTime? convertDate(String? inputdata) {
+  if (inputdata == null) {
+    return null;
+  }
+
+  final DateFormat format = DateFormat("yyyy-MM-dd");
+
+  try {
+    final DateTime dateTime = format.parse(inputdata);
+    return dateTime;
+  } catch (e) {
+    return null;
+  }
+
+}
