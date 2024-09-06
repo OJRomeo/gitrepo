@@ -1,0 +1,19 @@
+Future<int?> checacpfcnpj(String? recebe) async {
+  if (recebe == null) {
+    return null;
+  }
+
+  String cpfCnpj = recebe.replaceAll(RegExp(r'[^\d]'), '');
+
+  if (!RegExp(r'^\d+$').hasMatch(cpfCnpj)) {
+    return 0;
+  }
+
+  if (cpfCnpj.length == 11) {
+    return 1;
+  } else if (cpfCnpj.length == 14) {
+    return 2;
+  } else {
+    return 0;
+  }
+}
